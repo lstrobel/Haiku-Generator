@@ -41,17 +41,17 @@ public class HaikuGenerator {
          try {
             String output = "";
             for(int k : sCount){
-               File file = new File("C:\\Users\\Lukas\\Documents\\Programming\\Fun\\Haiku Generator\\mhyph.txt");
+               File file = new File("C:\\Users\\Lukas\\Documents\\Programming\\Fun\\Haiku Generator\\Syllables.txt");
                reader = new BufferedReader(new FileReader(file));
                String line;
-               double startPos = Math.random()*187000;
+               double startPos = Math.random()*42300;
                if(k != 0){
                   for(int i = 0; i < startPos; i++) {
                      line = reader.readLine();
                   }
                   while((line = reader.readLine()) != null) {
                      if(findSCount(line) == k){
-                        line = (squishLine(line) + " ");
+                        line = (parseWord(line) + " ");
                         output += line;
                         break;
                      }
@@ -99,15 +99,12 @@ public class HaikuGenerator {
 
       public static int findSCount(String line){
          String[] array = line.split(" ");
-         return array.length;
+         int num = array.length-2;
+         return num;
       }
 
-      public static String squishLine(String line){
+      public static String parseWord(String line){
          String[] array = line.split(" ");
-         String word = "";
-         for(String i : array){
-            word += i;
-         }
-         return word;
+         return array[0];
       }
 }
