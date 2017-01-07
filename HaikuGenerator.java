@@ -1,79 +1,113 @@
-// Created by Lukas Strobel, December 2016
+/**
+ * Created by Lukas on 1/5/2017.
+ * Create Haikus! They wont be good though...
+ */
 
-import java.util.*; // scanners
-import java.io.*; // file input
-import java.lang.*; //math
+import java.io.*;
+import java.util.*;
+import java.lang.*;
 
 public class HaikuGenerator {
-   public static void main(String[] args){
-      
-      int[] bar = {2,2,1};
-      int[] sCount = {7};
-      int[] foo = {4,1};
-      
-         
-      System.out.println(createHaikuLine(bar));
-      System.out.println(createHaikuLine(sCount));
-      System.out.println(createHaikuLine(foo));
-   
-   }
+      public static void main(String[] args){
 
-   // creates the line for a haiku. @sCount is the Array that defines word syllable length
-   public static String createHaikuLine(int[] sCount) {
-   
-      BufferedReader reader = null;  
-          
-      try {
-         File file = new File("dictionary.dat");
-         reader = new BufferedReader(new FileReader(file));
-         String line = "";
-         double startPos = Math.random()*187000;
-         String output = "";
-         
-         for(int k = 0; k < sCount.length; k++){
-            for(int i = 0; i < startPos; i++) {
-               line = reader.readLine();
-            }
-            if(sCount[k] != 0){
-               while((line = reader.readLine()) != null) {
-                  if(findSCount(line) == sCount[k]){
-                     line = (parseWord(line) + " ");
-                     output += line;
-                     break;
+         Scanner console = new Scanner(System.in);
+         String ans = "y";
+         System.out.print("Would you like to generate a haiku? (y/n)");
+         ans = console.next();
+
+         while(!ans.equals("n")){
+            int[] foo = randomSum(5);
+            int[] bar = randomSum(7);
+            int[] baz = randomSum(5);
+
+            String line1 = createHaikuLine(foo);
+            String line2 = createHaikuLine(bar);
+            String line3 = createHaikuLine(baz);
+
+            System.out.println("Haiku:");
+            System.out.println(line1);
+            System.out.println(line2);
+            System.out.println(line3);
+            System.out.print("Would you like to generate a haiku? (y/n)");
+            ans = console.next();
+         }
+      }
+
+      // create the line for a haiku, with @sCount number of syllables
+      public static String createHaikuLine(int[] sCount){
+
+         BufferedReader reader = null;
+
+         try {
+            String output = "";
+            for(int k : sCount){
+               File file = new File("C:\\Users\\Lukas\\Documents\\Programming\\Fun\\Haiku Generator\\mhyph.txt");
+               reader = new BufferedReader(new FileReader(file));
+               String line;
+               double startPos = Math.random()*187000;
+               if(k != 0){
+                  for(int i = 0; i < startPos; i++) {
+                     line = reader.readLine();
+                  }
+                  while((line = reader.readLine()) != null) {
+                     if(findSCount(line) == k){
+                        line = (squishLine(line) + " ");
+                        output += line;
+                        break;
+                     }
                   }
                }
             }
+            return output;
          }
-         
-         return output;
-      } 
-      
-      catch (IOException e) {
-         e.printStackTrace();
-      } 
-      finally {
-         try {
-            reader.close();
-         } 
+
          catch (IOException e) {
             e.printStackTrace();
          }
+         finally {
+            try {
+               reader.close();
+            }
+            catch (IOException e) {
+               e.printStackTrace();
+            }
+         }
+         return null;
       }
-      return null;
-   }
-   
-   public static int findSCount(String line){
-      Scanner lineScan = new Scanner(line);
-      String[] array = line.split(" ");
-      return array.length;
-   }
-   
-   public static String parseWord(String line){
-      String[] array = line.split(" ");
-      String word = "";
-      for(String i : array){
-         word += i;
+
+      // create a int array specifying how many words + how many syllables they should have
+      // @sum is the goal num of syllables
+      public static int[] randomSum(int sum){
+         //how many words you will use
+         int size = (int) Math.round( ((Math.random() * (sum-1)) + 1) );
+
+         //the array for the distribution of syllables, but between 0-1
+         int[] zeroOne = new int[size+1];
+         zeroOne[0] = 0; zeroOne[1] = sum;
+         for(int i = 2; i < zeroOne.length; i++){
+            zeroOne[i] = (int) Math.round( ((Math.random() * (sum-1)) + 1) );
+         }
+         Arrays.sort(zeroOne);
+
+         //the actual array with syllable count
+         int[] numbers = new int[size];
+         for(int i = 0; i < numbers.length; i++){
+            numbers[i] = zeroOne[i+1]-zeroOne[i];
+         }
+         return numbers;
       }
-      return word;
-   }
+
+      public static int findSCount(String line){
+         String[] array = line.split(" ");
+         return array.length;
+      }
+
+      public static String squishLine(String line){
+         String[] array = line.split(" ");
+         String word = "";
+         for(String i : array){
+            word += i;
+         }
+         return word;
+      }
 }
