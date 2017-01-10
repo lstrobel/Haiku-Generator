@@ -1,6 +1,8 @@
 # Haiku-Generator
 Simple Java program that creates senseless Haikus
 
+Created by Lukas Strobel early 2017
+
 Steps:  
 1. Generate an array with a random length, so that all the integer values in the array add up to the desired syllable count  
 2. Randomly search through the dictionary file to find words that fit the generated syllable count  
