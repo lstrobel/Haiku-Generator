@@ -38,7 +38,7 @@ public class HaikuGenerator {
       try {
          String output = "";
          for (int k : sCount) {
-            File file = new File("C:\\Users\\Lukas\\Documents\\Programming\\Fun\\Haiku Generator\\words.txt");
+            File file = new File("C:\\Users\\lstro\\Desktop\\Haiku-Generator-master\\words.txt");
             reader = new BufferedReader(new FileReader(file));
             String word;
             double startPos = Math.random() * 21700; // length of word file - ~100 to give the program some space
@@ -95,7 +95,7 @@ public class HaikuGenerator {
            throws FileNotFoundException {
       BufferedReader reader = null;
       try {
-         File file = new File("C:\\Users\\Lukas\\Documents\\Programming\\Fun\\Haiku Generator\\pronunciation.txt");
+         File file = new File("C:\\Users\\lstro\\Desktop\\Haiku-Generator-master\\pronunciation.txt");
          reader = new BufferedReader(new FileReader(file));
 
          word = word.toUpperCase();
@@ -129,10 +129,8 @@ public class HaikuGenerator {
       }
       return 0;
    }
-
-   // TEMPORARY
-   public static String parseWord(String line) {
-      String[] array = line.split(" ");
-      return array[0];
+   
+   public static boolean checkPOS(String word){
+      return false;
    }
 }
