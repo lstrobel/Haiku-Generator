@@ -61,7 +61,8 @@ public class HaikuGenerator {
                for (int i = 0; i < startPos; i++) { // skip ahead so that you have new words
                   reader.readLine();
                }
-               while ((word = reader.readLine()) != null) {
+               boolean breaker = true;
+               while (((word = reader.readLine()) != null) && breaker) {
                   String[] array = word.split(" ");
                   if (array.length == 3) {
                      word = array[0];
@@ -73,7 +74,7 @@ public class HaikuGenerator {
                   if ((findSyllableCount(word) == k) && (checkPOS(word, arrayPosition))) {
                      output += array[0] + " ";
                      arrayPosition++;
-                     break;
+                     breaker = false;
                   }
                }
             }

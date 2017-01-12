@@ -10952,6 +10952,7 @@ lug 1 h
 luggage 2 h
 luggage rack 0 h
 lugubrious 4 A
+lukas 2 N
 lukewarm 2 A
 lull 1 VN
 lullaby 3 Nt
